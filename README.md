@@ -17,15 +17,18 @@ python src/03_test.py                                                        # t
 python src/04_error_analysis.py                                              # error counts on validation predictions
 ```
 Context runs: `python src/02_train.py --mode context --levels hard --seeds 1 2 3 --save_model` (~43 min per seed).
-Easy and medium (pair-only): `python src/02_train.py --mode pair --levels easy medium --seeds 1 2 3`.
+Easy and medium (pair-only, ~30 min per seed): `python src/02_train.py --mode pair --levels easy medium --seeds 1 2 3`.
 
-## Results so far (hard)
-| System | Test macro-F1 | Dev macro-F1 |
-|---|---|---|
-| Pair-only DeBERTa-v3-base | 0.846 +- 0.004 [0.838, 0.854] | 0.843 +- 0.005 |
-| Context DeBERTa-v3-base | pending (final report) | 0.816 +- 0.005 |
+## Results so far (test macro-F1, mean +- std over seeds 1-3, 95% paired bootstrap over test documents)
+| System | Easy | Medium | Hard | Hard dev |
+|---|---|---|---|---|
+| Pair-only DeBERTa-v3-base | 0.960 +- 0.003 [0.955, 0.964] | 0.836 +- 0.005 [0.826, 0.846] | 0.846 +- 0.004 [0.838, 0.854] | 0.843 +- 0.005 |
+| Context DeBERTa-v3-base | not run | not run | pending (final report) | 0.816 +- 0.005 |
+| Lin et al. (2025), published | 0.958 | 0.823 | 0.830 | - |
 
-`results/` holds the per-run logs, `preds/` the per-pair predictions.
+Our runs select the checkpoint on dev; small differences to the published scores are not a claim of a better method.
+
+`results/results_all.csv` has one row per run (all levels); per-pair predictions are in `preds/` if uploaded.
 
 ## Environment
 Python 3.13.16, torch 2.11.0, transformers 5.20.2, scikit-learn 1.6.1, pandas 2.3.3.
